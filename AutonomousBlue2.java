@@ -1,15 +1,16 @@
-                 package org.firstinspires.ftc.teamcode.ftc16072;
+package org.firstinspires.ftc.teamcode.ftc10553;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import java.util.List;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous [blue right]", group="Anonymouse")
+@Autonomous(name="Autonomous [blue right]", group="Anonymouse")
 
 //Note: Designed thus far to operate from second blue line (hence Blue2)
 public class AutonomousBlue2 extends LinearOpMode {
