@@ -14,10 +14,10 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 //Note: Designed thus far to operate from second blue line (hence Blue2)
 public class AutonomousBlue2 extends LinearOpMode {
-   DcMotor front_left_motor;
-   DcMotor front_right_motor;
-   DcMotor back_left_motor;
-   DcMotor back_right_motor;
+   DcMotor front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
+   DcMotor front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
+   DcMotor back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
+   DcMotor back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
    String outcome = "null";
    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
    private static final String LABEL_FIRST_ELEMENT = "Quad";
@@ -137,10 +137,7 @@ public class AutonomousBlue2 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         initVuforia();
         initTfod();
-        front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
-        front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
-        back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
-        back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
+        
         front_left_motor.setDirection(DcMotor.Direction.FORWARD);
         front_right_motor.setDirection(DcMotor.Direction.REVERSE);
         back_left_motor.setDirection(DcMotor.Direction.FORWARD);
