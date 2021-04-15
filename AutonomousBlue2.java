@@ -217,8 +217,3 @@ public class AutonomousBlue2 extends LinearOpMode {
     }
   }
 }
-
-
-
-
-
