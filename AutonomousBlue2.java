@@ -19,7 +19,6 @@ public class AutonomousBlue2 extends LinearOpMode {
    DcMotor back_left_motor;
    DcMotor back_right_motor;
    String outcome = "null";
-   int position;
    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
    private static final String LABEL_FIRST_ELEMENT = "Quad";
    private static final String LABEL_SECOND_ELEMENT = "Single";
