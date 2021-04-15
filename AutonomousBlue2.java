@@ -179,7 +179,7 @@ public class AutonomousBlue2 extends LinearOpMode {
                 right_turn();
                 encoder(4000);
             } else if (recognition.getLabel().equals("Single")) {
-                outcome = “B”;
+                outcome = "B";
                 right_turn();
                 encoder(-1500);
                 left_turn();
@@ -213,7 +213,6 @@ public class AutonomousBlue2 extends LinearOpMode {
         }
         telemetry.addData("outcome:" + outcome);
         telemetry.update();
-	// Insert power shot here 
-    }
-  }
+        // Insert power shot here
+   }
 }
