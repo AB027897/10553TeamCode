@@ -211,11 +211,9 @@ public class AutonomousBlue2 extends LinearOpMode {
         if (tfod != null) {
             tfod.shutdown();
         }
-   // Insert power shot here (Adam help plz)
-   // Hopefully all outcomes will have the bot parking in the same spot so the shot can be aimed well
-   // no matter what
         telemetry.addData("outcome:" + outcome);
         telemetry.update();
+	// Insert power shot here 
     }
   }
 }
