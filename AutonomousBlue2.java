@@ -14,19 +14,22 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 //Note: Designed thus far to operate from second blue line (hence Blue2)
 public class AutonomousBlue2 extends LinearOpMode {
+   //Initialize all motors
    DcMotor front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
    DcMotor front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
    DcMotor back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
    DcMotor back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
-   String outcome = "null";
+   String outcome = "";
+   //Initialize tensorflow model
    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
    private static final String LABEL_FIRST_ELEMENT = "Quad";
    private static final String LABEL_SECOND_ELEMENT = "Single";
+   //Vuforia key which is required for initializing 
    private static final String VUFORIA_KEY =
           "AVgDgHH/////AAABmYSjDOxUjkoloTDlPbTfcxMdY+UnPMMGHvIoENz7ljjIJLU7u/WzCXUMDrkDD3rtaVaTTqHY2RiMeeBO0+nWwRe3aHkzxtpSa0LEdicMGhjyk0JyTKusUjg3l0kj1xYOmTidIjIlCc18/Z3FKZTBKEwZrSgakYxiot2r4zBdXcyMekArDle5NCxpDHATu261ZnwhBJc7UKazEkRCbtn9qaN0a5dB0kX3dhGxrargryTg0AuEj17NaXxy8tnq10HEXb2NiwvOJVFiw3YJhEMvyUq5bmY/c0yEchStOyy2bOswp5xtXE5+Qwy8Ty474gYH5ROWRdwrf+6mzFtS4CGdotST1dAOo3uuMgcTNvxsU4CZ ";
    private VuforiaLocalizer vuforia;
    private TFObjectDetector tfod;
-
+   //Method to drive the motors using encoders to a certain position
    public void encoder(int position) {
        front_left_motor.setTargetPosition(position);
        front_right_motor.setTargetPosition(position);
@@ -58,7 +61,7 @@ public class AutonomousBlue2 extends LinearOpMode {
        back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
    }
-
+   //Method to turn right using encoders
    public void right_turn() {
        front_left_motor.setTargetPosition(-2125);
        front_right_motor.setTargetPosition(2125);
@@ -89,7 +92,7 @@ public class AutonomousBlue2 extends LinearOpMode {
        back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
    }
-
+   //Method to turn left using encoders
    public void left_turn() {
        front_left_motor.setTargetPosition(2125);
        front_right_motor.setTargetPosition(-2125);
@@ -119,12 +122,14 @@ public class AutonomousBlue2 extends LinearOpMode {
        back_left_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
        back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
    }
-     private void initVuforia() {
+    //Method to intialize vuforia
+    private void initVuforia() {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
         parameters.cameraDirection = CameraDirection.BACK;
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }
+    //Method to intialize tensorflow object detection 
     private void initTfod() {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
             "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -137,7 +142,6 @@ public class AutonomousBlue2 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         initVuforia();
         initTfod();
-        
         front_left_motor.setDirection(DcMotor.Direction.FORWARD);
         front_right_motor.setDirection(DcMotor.Direction.REVERSE);
         back_left_motor.setDirection(DcMotor.Direction.FORWARD);
@@ -160,6 +164,7 @@ public class AutonomousBlue2 extends LinearOpMode {
         encoder(-1000);
         right_turn();
         encoder(-250);
+	//Checking if TensorFlow has detected anything   
         List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
         if (updatedRecognitions.size() != 0 ) {
             if (recognition.getLabel().equals("Quad")) {
