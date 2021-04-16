@@ -18,15 +18,21 @@ public class AutonomousBlue1 extends LinearOpMode {
    DcMotor front_right_motor;
    DcMotor back_left_motor;
    DcMotor back_right_motor;
-   String outcome = "null";
+   DcMotor front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
+   DcMotor front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
+   DcMotor back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
+   DcMotor back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
+   String outcome = "";
+   //Initialize tensorflow model
    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
    private static final String LABEL_FIRST_ELEMENT = "Quad";
    private static final String LABEL_SECOND_ELEMENT = "Single";
+   //Vuforia key which is required for initializing 
    private static final String VUFORIA_KEY =
            "AVgDgHH/////AAABmYSjDOxUjkoloTDlPbTfcxMdY+UnPMMGHvIoENz7ljjIJLU7u/WzCXUMDrkDD3rtaVaTTqHY2RiMeeBO0+nWwRe3aHkzxtpSa0LEdicMGhjyk0JyTKusUjg3l0kj1xYOmTidIjIlCc18/Z3FKZTBKEwZrSgakYxiot2r4zBdXcyMekArDle5NCxpDHATu261ZnwhBJc7UKazEkRCbtn9qaN0a5dB0kX3dhGxrargryTg0AuEj17NaXxy8tnq10HEXb2NiwvOJVFiw3YJhEMvyUq5bmY/c0yEchStOyy2bOswp5xtXE5+Qwy8Ty474gYH5ROWRdwrf+6mzFtS4CGdotST1dAOo3uuMgcTNvxsU4CZ ";
    private VuforiaLocalizer vuforia;
    private TFObjectDetector tfod;
-
+   //Method to drive the motors using encoders to a certain position
    public void encoder(int position) {
        front_left_motor.setTargetPosition(position);
        front_right_motor.setTargetPosition(position);
@@ -53,7 +59,7 @@ public class AutonomousBlue1 extends LinearOpMode {
        back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
    }
-
+   //Method to turn right using encoders
    public void right_turn() {
        front_left_motor.setTargetPosition(-2125);
        front_right_motor.setTargetPosition(2125);
@@ -79,7 +85,7 @@ public class AutonomousBlue1 extends LinearOpMode {
        back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
    }
-
+   //Method to turn left using encoders
    public void left_turn() {
        front_left_motor.setTargetPosition(2125);
        front_right_motor.setTargetPosition(-2125);
@@ -104,6 +110,7 @@ public class AutonomousBlue1 extends LinearOpMode {
        back_left_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
        back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
    }
+   //Method to intialize vuforia
    private void initVuforia() {
 
        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -113,7 +120,7 @@ public class AutonomousBlue1 extends LinearOpMode {
 
        vuforia = ClassFactory.getInstance().createVuforia(parameters);
    }
-
+   //Method to intialize tensorflow object detection 
    private void initTfod() {
        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -125,20 +132,12 @@ public class AutonomousBlue1 extends LinearOpMode {
 
    @Override
    public void runOpMode() throws InterruptedException {
-       telemetry.addData("outcome:", outcome);
-       telemetry.update();
        initVuforia();
        initTfod();
-       front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
-       front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
-       back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
-       back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
-
        front_left_motor.setDirection(DcMotor.Direction.FORWARD);
        front_right_motor.setDirection(DcMotor.Direction.REVERSE);
        back_left_motor.setDirection(DcMotor.Direction.FORWARD);
        back_right_motor.setDirection(DcMotor.Direction.REVERSE);
-
        front_left_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
        front_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
        back_left_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -147,28 +146,20 @@ public class AutonomousBlue1 extends LinearOpMode {
            tfod.activate();
            tfod.setZoom(2.5, 16.0/9.0);
        }
-
-
        telemetry.addData("Mode", "waiting");
        telemetry.update();
-
        waitForStart();
-
        telemetry.addData("Mode", "running");
        telemetry.update();
-
        encoder(-2500);
        right_turn();
        encoder(-1000);
        left_turn();
        encoder(-250);
-
+	    //Checking if TensorFlow has detected anything   
        List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-
-
        if (updatedRecognitions.size() != 0 ) {
            if (recognition.getLabel().equals("Quad")) {
-
                outcome = "C";
                telemetry.update();
                right_turn();
@@ -177,15 +168,11 @@ public class AutonomousBlue1 extends LinearOpMode {
                encoder(-8000);
                left_turn();
                encoder(-1750);
-
                // This is where the wobble goal will be dropped
-
                encoder(2500);
                right_turn();
                encoder(4000);
-
            } else if (recognition.getLabel().equals("Single")) {
-
                outcome = "B";
                telemetry.update();
                right_turn();
@@ -198,9 +185,7 @@ public class AutonomousBlue1 extends LinearOpMode {
                right_turn();
                encoder(2000);
            }
-
        } else if (updatedRecognitions.size() == 0 ) {
-
            outcome = "A";
            telemetry.update();
            left_turn();
@@ -212,21 +197,19 @@ public class AutonomousBlue1 extends LinearOpMode {
            encoder(-4000);
            left_turn();
            encoder(-2125);
-
        } else {
-
            outcome = "UNKNOWN; Parking for power shot";
            telemetry.update();
            right_turn();
            encoder(-2500);
            left_turn();
            encoder(-4125);
-
-
        }
        if (tfod != null) {
            tfod.shutdown();
        }
        // Insert power shot here 
+       telemetry.addData("outcome:", outcome);
+       telemetry.update();
    }
 }
