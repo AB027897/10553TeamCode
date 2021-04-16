@@ -7,10 +7,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import java.util.List;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous [blue left]", group="Anonymouse")
+@Autonomous(name="Autonomous [blue left]", group="Anonymouse")
 
 //Note: Designed thus far to operate from first blue line (hence Blue1)
 public class AutonomousBlue1 extends LinearOpMode {
