@@ -1,7 +1,7 @@
 
 
 // Establishes that this is an FTC code
-//package org.firstinspires.ftc.teamcode.ftc10553;
+package org.firstinspires.ftc.teamcode.ftc10553;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
