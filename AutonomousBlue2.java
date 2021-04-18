@@ -150,9 +150,9 @@ public class AutonomousBlue2 extends LinearOpMode {
         front_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         back_left_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-	    if (tfod != null) {
+	if (tfod != null) {
             tfod.activate();
-            tfod.setZoom(2.5, 16/9);
+            tfod.setZoom(2.5, 16.0/9.0);
         }
         telemetry.addData("Mode", "waiting");
         telemetry.update();
