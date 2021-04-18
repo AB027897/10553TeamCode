@@ -212,7 +212,7 @@ public class AutonomousBlue2 extends LinearOpMode {
         if (tfod != null) {
             tfod.shutdown();
         }
-        telemetry.addData("outcome:" + outcome);
+        telemetry.addData("outcome: ", outcome);
         telemetry.update();
         // Insert power shot here
    }
