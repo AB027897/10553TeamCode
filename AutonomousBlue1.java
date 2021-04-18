@@ -159,7 +159,7 @@ public class AutonomousBlue1 extends LinearOpMode {
 	    //Checking if TensorFlow has detected anything   
        List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
        if (updatedRecognitions.size() != 0 ) {
-           if (recognition.getLabel().equals("Quad")) {
+           if (updatedRecognitions.get(updatedRecognitions.size()-1).getLabel().equals("Quad")) {
                outcome = "C";
                telemetry.update();
                right_turn();
@@ -172,7 +172,7 @@ public class AutonomousBlue1 extends LinearOpMode {
                encoder(2500);
                right_turn();
                encoder(4000);
-           } else if (recognition.getLabel().equals("Single")) {
+           } else if (updatedRecognitions.get(updatedRecognitions.size()-1).getLabel().equals("Single")) {
                outcome = "B";
                telemetry.update();
                right_turn();
