@@ -33,8 +33,8 @@ public class TeleOp extends LinearOpMode {
    private CRServo intake_right = null;
    private Servo aim_left = null;
    private Servo aim_right = null;
+   double position = 0;
    final double servoPower = 0.3;
-   final double position = 0;
    final double shootingPower = 1;
    @Override
    public void runOpMode() {
