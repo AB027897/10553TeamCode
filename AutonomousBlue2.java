@@ -14,11 +14,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 //Note: Designed thus far to operate from second blue line (hence Blue2)
 public class AutonomousBlue2 extends LinearOpMode {
-   //Initialize all motors
-   DcMotor front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
-   DcMotor front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
-   DcMotor back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
-   DcMotor back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
+
    String outcome = "";
    //Initialize tensorflow model
    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
@@ -30,6 +26,15 @@ public class AutonomousBlue2 extends LinearOpMode {
    private VuforiaLocalizer vuforia;
    private TFObjectDetector tfod;
    //Method to drive the motors using encoders to a certain position
+   
+   public void init() {
+   //Initialize all motors
+   DcMotor front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
+   DcMotor front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
+   DcMotor back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
+   DcMotor back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
+   }  
+    
    public void encoder(int position) {
        front_left_motor.setTargetPosition(position);
        front_right_motor.setTargetPosition(position);
@@ -140,6 +145,7 @@ public class AutonomousBlue2 extends LinearOpMode {
     }
     @Override
     public void runOpMode() throws InterruptedException {
+        init();
         initVuforia();
         initTfod();
         front_left_motor.setDirection(DcMotor.Direction.FORWARD);
@@ -150,7 +156,7 @@ public class AutonomousBlue2 extends LinearOpMode {
         front_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         back_left_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-	if (tfod != null) {
+    if (tfod != null) {
             tfod.activate();
             tfod.setZoom(2.5, 16.0/9.0);
         }
@@ -164,7 +170,7 @@ public class AutonomousBlue2 extends LinearOpMode {
         encoder(-1000);
         right_turn();
         encoder(-250);
-	//Checking if TensorFlow has detected anything   
+    //Checking if TensorFlow has detected anything   
         List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
         if (updatedRecognitions.size() != 0 ) {
             if (updatedRecognitions.get(updatedRecognitions.size()-1).getLabel().equals("Quad")) {
