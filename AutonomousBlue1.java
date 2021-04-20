@@ -13,11 +13,8 @@ import java.util.List;
 @Autonomous(name="Autonomous [blue left]", group="Anonymouse")
 
 //Note: Designed thus far to operate from first blue line (hence Blue1)
-public class AutonomousBlue1 extends LinearOpMode {
-   DcMotor front_left_motor;
-   DcMotor front_right_motor;
-   DcMotor back_left_motor;
-   DcMotor back_right_motor;
+public class AutonomousBlue1 extends LinearOpMode{
+
    DcMotor front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
    DcMotor front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
    DcMotor back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
@@ -144,7 +141,7 @@ public class AutonomousBlue1 extends LinearOpMode {
        back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
        if (tfod != null) {
            tfod.activate();
-           tfod.setZoom(2.5, 16.0/9.0);
+          // tfod.setZoom(2.5, 16.0/9.0);
        }
        telemetry.addData("Mode", "waiting");
        telemetry.update();
@@ -156,7 +153,7 @@ public class AutonomousBlue1 extends LinearOpMode {
        encoder(-1000);
        left_turn();
        encoder(-250);
-	    //Checking if TensorFlow has detected anything   
+        //Checking if TensorFlow has detected anything   
        List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
        if (updatedRecognitions.size() != 0 ) {
            if (updatedRecognitions.get(updatedRecognitions.size()-1).getLabel().equals("Quad")) {
