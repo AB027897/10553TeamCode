@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.ftc10553;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import java.util.List;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -27,13 +28,16 @@ public class AutonomousBlue2 extends LinearOpMode {
    private TFObjectDetector tfod;
    //Method to drive the motors using encoders to a certain position
    
-   public void init() {
    //Initialize all motors
-   DcMotor front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
-   DcMotor front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
-   DcMotor back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
-   DcMotor back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
-   }  
+   //DcMotor front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
+   //DcMotor front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
+   //DcMotor back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
+   //DcMotor back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
+   DcMotor front_left_motor = null;
+   DcMotor front_right_motor = null;
+   DcMotor back_left_motor = null;
+   DcMotor back_right_motor = null;
+    
     
    public void encoder(int position) {
        front_left_motor.setTargetPosition(position);
@@ -145,7 +149,12 @@ public class AutonomousBlue2 extends LinearOpMode {
     }
     @Override
     public void runOpMode() throws InterruptedException {
-        init();
+        waitForStart();
+        while (opModeIsActive()){
+        front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
+        front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
+        back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
+        back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
         initVuforia();
         initTfod();
         front_left_motor.setDirection(DcMotor.Direction.FORWARD);
@@ -221,5 +230,6 @@ public class AutonomousBlue2 extends LinearOpMode {
         telemetry.addData("outcome: ", outcome);
         telemetry.update();
         // Insert power shot here
+        }
    }
 }
