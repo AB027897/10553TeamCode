@@ -15,10 +15,7 @@ import java.util.List;
 //Note: Designed thus far to operate from first blue line (hence Blue1)
 public class AutonomousBlue1 extends LinearOpMode{
 
-   DcMotor front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
-   DcMotor front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
-   DcMotor back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
-   DcMotor back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
+   
    String outcome = "";
    //Initialize tensorflow model
    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
@@ -29,6 +26,11 @@ public class AutonomousBlue1 extends LinearOpMode{
            "AVgDgHH/////AAABmYSjDOxUjkoloTDlPbTfcxMdY+UnPMMGHvIoENz7ljjIJLU7u/WzCXUMDrkDD3rtaVaTTqHY2RiMeeBO0+nWwRe3aHkzxtpSa0LEdicMGhjyk0JyTKusUjg3l0kj1xYOmTidIjIlCc18/Z3FKZTBKEwZrSgakYxiot2r4zBdXcyMekArDle5NCxpDHATu261ZnwhBJc7UKazEkRCbtn9qaN0a5dB0kX3dhGxrargryTg0AuEj17NaXxy8tnq10HEXb2NiwvOJVFiw3YJhEMvyUq5bmY/c0yEchStOyy2bOswp5xtXE5+Qwy8Ty474gYH5ROWRdwrf+6mzFtS4CGdotST1dAOo3uuMgcTNvxsU4CZ ";
    private VuforiaLocalizer vuforia;
    private TFObjectDetector tfod;
+   //initalize motors
+   DcMotor front_left_motor;
+   DcMotor front_right_motor;
+   DcMotor back_left_motor;
+   DcMotor back_right_motor;
    //Method to drive the motors using encoders to a certain position
    public void encoder(int position) {
        front_left_motor.setTargetPosition(position);
@@ -129,6 +131,10 @@ public class AutonomousBlue1 extends LinearOpMode{
 
    @Override
    public void runOpMode() throws InterruptedException {
+       front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
+       front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
+       back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
+       back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
        initVuforia();
        initTfod();
        front_left_motor.setDirection(DcMotor.Direction.FORWARD);
