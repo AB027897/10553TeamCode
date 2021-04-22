@@ -37,10 +37,10 @@ public class AutonomousRed2 extends LinearOpMode {
        front_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_left_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-       front_left_motor.setPower(0.75);
-       front_right_motor.setPower(0.75);
-       back_left_motor.setPower(0.75);
-       back_right_motor.setPower(0.75);
+       front_left_motor.setPower(0.5);
+       front_right_motor.setPower(0.5);
+       back_left_motor.setPower(0.5);
+       back_right_motor.setPower(0.5);
        while (opModeIsActive() && front_left_motor.getCurrentPosition() < front_left_motor.getTargetPosition()) {
            idle();
        }
@@ -64,10 +64,10 @@ public class AutonomousRed2 extends LinearOpMode {
        front_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_left_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-       front_left_motor.setPower(1.00);
-       front_right_motor.setPower(1.00);
-       back_left_motor.setPower(1.00);
-       back_right_motor.setPower(1.00);
+       front_left_motor.setPower(0.75);
+       front_right_motor.setPower(0.75);
+       back_left_motor.setPower(0.75);
+       back_right_motor.setPower(0.75);
        while (opModeIsActive() && front_left_motor.getCurrentPosition() < front_left_motor.getTargetPosition()) {
            idle();
        }
@@ -90,10 +90,10 @@ public class AutonomousRed2 extends LinearOpMode {
        front_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_left_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-       front_left_motor.setPower(1.00);
-       front_right_motor.setPower(1.00);
-       back_left_motor.setPower(1.00);
-       back_right_motor.setPower(1.00);
+       front_left_motor.setPower(0.75);
+       front_right_motor.setPower(0.75);
+       back_left_motor.setPower(0.75);
+       back_right_motor.setPower(0.75);
        while (opModeIsActive() && front_left_motor.getCurrentPosition() < front_left_motor.getTargetPosition()) {
            idle();
        }
