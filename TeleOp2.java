@@ -81,7 +81,7 @@ public class TeleOp2 extends LinearOpMode {
                 
                } else {
                 set = true;
-                feederNeg = 1;
+                feederNeg = -1;
                }
            }
            // Has power amounts respond to joystick and makes sure the power isn’t over the maximum input of a motor
