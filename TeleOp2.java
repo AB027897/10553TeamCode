@@ -26,7 +26,7 @@ public class TeleOp2 extends LinearOpMode {
    private DcMotor shooter_left = null;
    private DcMotor shooter_right = null;
    private Servo feeder = null;
-   private CRServo intake = null;
+   private CRServo intake_servo = null;
    double position = 0;
    boolean set = false;;
    @Override
@@ -43,8 +43,8 @@ public class TeleOp2 extends LinearOpMode {
        shooter_right = hardwareMap.get(DcMotor.class, "shooter_right");
        lift = hardwareMap.get(DcMotor.class, "lift");
        pulley = hardwareMap.get(DcMotor.class, "pulley");
-       feeder = hardwareMap.get(CRServo.class, "feeder");
-       intake_servo = hardwareMap.get(Servo.class, "intake_servo");
+       feeder = hardwareMap.get(Servo.class, "feeder");
+       intake_servo = hardwareMap.get(CRServo.class, "intake_servo");
        //Sets motor directions 
        front_left_motor.setDirection(DcMotor.Direction.REVERSE);
        front_right_motor.setDirection(DcMotor.Direction.FORWARD);
@@ -64,16 +64,16 @@ public class TeleOp2 extends LinearOpMode {
            double leftBackPower;
            double rightBackPower;
            double intakePower;
-           double pulleyPower; 
-           double feederPos;
-           double feederNeg;
+           double pulleyPower = 0;
+           double feederPos = 0;
+           double feederNeg = 0;
            //Takes input from gamepads and assigns it to the variables attached to motor power
            double drive = -gamepad1.left_stick_y;
            double turn  = gamepad1.left_stick_x;
            double strafe = gamepad1.right_stick_x;
            double liftPower  = gamepad2.left_stick_y;
            double shoot = gamepad2.right_stick_y; 
-           double intakePower= gamepad2.left_trigger;
+           double intake = gamepad2.left_trigger;
            double reverseIntake = -gamepad2.right_trigger;
            if(gamepad2.a) {
                if(set) {
@@ -86,6 +86,7 @@ public class TeleOp2 extends LinearOpMode {
                }
            } else if(gamepad2.left_bumper) {
               pulleyPower = 0.9; 
+           }
            // Has power amounts respond to joystick and makes sure the power isn’t over the maximum input of a motor
            leftFrontPower    = Range.clip(drive + strafe + turn, -1.0, 1.0) ;
            rightFrontPower   = Range.clip(drive - strafe - turn, -1.0, 1.0) ;
@@ -103,13 +104,15 @@ public class TeleOp2 extends LinearOpMode {
            shooter_left.setPower(shoot);
            shooter_right.setPower(shoot);
            //Set continous servo power
-           intake.setPower(intakePower);
+           intake_servo.setPower(intakePower);
            //Regular servo move to position.
            feeder.setPosition(position);
            // Shows the power that the motors are running at as well as the time on the telemetry
            telemetry.addData("Status:", "Run Time: " + runtime.toString());
            telemetry.addData("Current Motor Powers", "front left (%.2f), front right (%.2f), back left (%.2f), back right (%.2f)", leftFrontPower, rightFrontPower, leftBackPower, rightBackPower);
            telemetry.update();
+           
        }
+       
    }
 }
