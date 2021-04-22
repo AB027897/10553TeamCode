@@ -40,10 +40,10 @@ public class AutonomousBlue2 extends LinearOpMode {
        front_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_left_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-       front_left_motor.setPower(0.75);
-       front_right_motor.setPower(0.75);
-       back_left_motor.setPower(0.75);
-       back_right_motor.setPower(0.75);
+       front_left_motor.setPower(0.5);
+       front_right_motor.setPower(0.5);
+       back_left_motor.setPower(0.5);
+       back_right_motor.setPower(0.5);
        while (opModeIsActive() && front_left_motor.isBusy()) {
            telemetry.addData("F.Left Count:", front_left_motor.getCurrentPosition() + "  busy=" + front_left_motor.isBusy());
            telemetry.addData("F.Right Count:", front_right_motor.getCurrentPosition() + "  busy=" + front_right_motor.isBusy());
@@ -72,10 +72,10 @@ public class AutonomousBlue2 extends LinearOpMode {
        front_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_left_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-       front_left_motor.setPower(1.00);
-       front_right_motor.setPower(1.00);
-       back_left_motor.setPower(1.00);
-       back_right_motor.setPower(1.00);
+       front_left_motor.setPower(0.75);
+       front_right_motor.setPower(0.75);
+       back_left_motor.setPower(0.75);
+       back_right_motor.setPower(0.75);
        while (opModeIsActive() && front_left_motor.isBusy()) {
            telemetry.addData("F.Left Count:", front_left_motor.getCurrentPosition() + "  busy=" + front_left_motor.isBusy());
            telemetry.addData("F.Right Count:", front_right_motor.getCurrentPosition() + "  busy=" + front_right_motor.isBusy());
@@ -103,10 +103,10 @@ public class AutonomousBlue2 extends LinearOpMode {
        front_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_left_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
        back_right_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-       front_left_motor.setPower(1.00);
-       front_right_motor.setPower(1.00);
-       back_left_motor.setPower(1.00);
-       back_right_motor.setPower(1.00);
+       front_left_motor.setPower(0.75);
+       front_right_motor.setPower(0.75);
+       back_left_motor.setPower(0.75);
+       back_right_motor.setPower(0.75);
        while (opModeIsActive() && front_left_motor.isBusy()) {
            telemetry.addData("F.Left Count:", front_left_motor.getCurrentPosition() + "  busy=" + front_left_motor.isBusy());
            telemetry.addData("F.Right Count:", front_right_motor.getCurrentPosition() + "  busy=" + front_right_motor.isBusy());
