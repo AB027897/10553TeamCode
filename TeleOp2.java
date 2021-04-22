@@ -64,6 +64,7 @@ public class TeleOp2 extends LinearOpMode {
            double leftBackPower;
            double rightBackPower;
            double intakePower;
+           double pulleyPower; 
            double feederPos;
            double feederNeg;
            //Takes input from gamepads and assigns it to the variables attached to motor power
@@ -83,7 +84,8 @@ public class TeleOp2 extends LinearOpMode {
                 set = true;
                 feederNeg = -1;
                }
-           }
+           } else if(gamepad2.left_bumper) {
+              pulleyPower = 0.9; 
            // Has power amounts respond to joystick and makes sure the power isn’t over the maximum input of a motor
            leftFrontPower    = Range.clip(drive + strafe + turn, -1.0, 1.0) ;
            rightFrontPower   = Range.clip(drive - strafe - turn, -1.0, 1.0) ;
@@ -97,7 +99,7 @@ public class TeleOp2 extends LinearOpMode {
            back_left_motor.setPower(leftBackPower);
            back_right_motor.setPower(rightBackPower);
            lift.setPower(liftPower);
-           pulley.setPower();
+           pulley.setPower(pulleyPower);
            shooter_left.setPower(shoot);
            shooter_right.setPower(shoot);
            //Set continous servo power
