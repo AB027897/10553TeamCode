@@ -90,7 +90,7 @@ public class TeleOp2 extends LinearOpMode {
            leftBackPower = Range.clip(drive - strafe + turn , -1.0, 1.0);
            rightBackPower = Range.clip(drive + strafe - turn , -1.0, 1.0);
            intakePower = Range.clip(intake + reverseIntake, -1.0, 1.0);
-           position+= (aimPos + aimNeg)*0.25;
+           position+= (feederPos + feederNeg)*0.25;
            // Has motors respond to input values.
            front_left_motor.setPower(leftFrontPower);
            front_right_motor.setPower(rightFrontPower);
