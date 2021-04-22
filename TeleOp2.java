@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 // Sets the preview name on the simulator
-@TeleOp(name="TheTeleOp")
+@TeleOp(name="TeleOp2")
 
-public class TheTeleOp extends LinearOpMode {
+public class TeleOp2 extends LinearOpMode {
 
 
    // Establishes the motors and servos being used + telemetry elapsed time
