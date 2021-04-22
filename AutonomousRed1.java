@@ -129,6 +129,10 @@ public class AutonomousRed1 extends LinearOpMode {
    public void runOpMode() throws InterruptedException {
       waitForStart();
       while(opModeIsActive()) {
+       front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
+       front_right_motor = hardwareMap.get(DcMotor.class, "front_right_motor");
+       back_left_motor = hardwareMap.get(DcMotor.class, "back_left_motor");
+       back_right_motor = hardwareMap.get(DcMotor.class, "back_right_motor");
        initVuforia();
        initTfod();
        front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
