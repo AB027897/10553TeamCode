@@ -7,19 +7,19 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-
 import java.util.List;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous [red right]", group="Anonymouse")
+@Autonomous(name="Autonomous [red right]", group="Anonymouse")
 
 //Note: Designed thus far to operate from second blue line (hence Blue2)
 public class AutonomousRed1 extends LinearOpMode {
-   DcMotor front_left_motor;
-   DcMotor front_right_motor;
-   DcMotor back_left_motor;
-   DcMotor back_right_motor;
+   DcMotor front_left_motor = null;
+   DcMotor front_right_motor = null;
+   DcMotor back_left_motor = null;
+   DcMotor back_right_motor = null;
    String outcome = "";
-   int position = 0;
+   //Initialize tensorflow model
    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
    private static final String LABEL_FIRST_ELEMENT = "Quad";
    private static final String LABEL_SECOND_ELEMENT = "Single";
@@ -27,7 +27,7 @@ public class AutonomousRed1 extends LinearOpMode {
            "AVgDgHH/////AAABmYSjDOxUjkoloTDlPbTfcxMdY+UnPMMGHvIoENz7ljjIJLU7u/WzCXUMDrkDD3rtaVaTTqHY2RiMeeBO0+nWwRe3aHkzxtpSa0LEdicMGhjyk0JyTKusUjg3l0kj1xYOmTidIjIlCc18/Z3FKZTBKEwZrSgakYxiot2r4zBdXcyMekArDle5NCxpDHATu261ZnwhBJc7UKazEkRCbtn9qaN0a5dB0kX3dhGxrargryTg0AuEj17NaXxy8tnq10HEXb2NiwvOJVFiw3YJhEMvyUq5bmY/c0yEchStOyy2bOswp5xtXE5+Qwy8Ty474gYH5ROWRdwrf+6mzFtS4CGdotST1dAOo3uuMgcTNvxsU4CZ ";
    private VuforiaLocalizer vuforia;
    private TFObjectDetector tfod;
-
+   //Method to drive the motors using encoders to a certain position
    public void encoder(int position) {
        front_left_motor.setTargetPosition(position);
        front_right_motor.setTargetPosition(position);
@@ -54,7 +54,7 @@ public class AutonomousRed1 extends LinearOpMode {
        back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
    }
-
+   //Method to turn right using encoders
    public void right_turn() {
        front_left_motor.setTargetPosition(-2125);
        front_right_motor.setTargetPosition(2125);
@@ -80,7 +80,7 @@ public class AutonomousRed1 extends LinearOpMode {
        back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
    }
-
+   //Method to turn left using encoders
    public void left_turn() {
        front_left_motor.setTargetPosition(2125);
        front_right_motor.setTargetPosition(-2125);
@@ -105,6 +105,7 @@ public class AutonomousRed1 extends LinearOpMode {
        back_left_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
        back_right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
    }
+   //Method to intialize vuforia
    private void initVuforia() {
 
        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -114,7 +115,7 @@ public class AutonomousRed1 extends LinearOpMode {
 
        vuforia = ClassFactory.getInstance().createVuforia(parameters);
    }
-
+   //Method to intialize tensorflow object detection 
    private void initTfod() {
        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -123,13 +124,11 @@ public class AutonomousRed1 extends LinearOpMode {
        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
    }
-
-
+   
    @Override
-
    public void runOpMode() throws InterruptedException {
-       telemetry.addData("outcome:", outcome);
-       telemetry.update();
+      waitForStart();
+      while(opModeIsActive()) {
        initVuforia();
        initTfod();
        front_left_motor = hardwareMap.get(DcMotor.class, "front_left_motor");
@@ -150,25 +149,18 @@ public class AutonomousRed1 extends LinearOpMode {
            tfod.activate();
            tfod.setZoom(2.5, 16.0/9.0);
        }
-
-
        telemetry.addData("Mode", "waiting");
        telemetry.update();
-
        waitForStart();
-
        telemetry.addData("Mode", "running");
        telemetry.update();
-
        encoder(-2500);
        right_turn();
        encoder(-1000);
        left_turn();
        encoder(-250);
-
        List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-
-
+       //Checking if TensorFlow has detected anything   
        if (updatedRecognitions.size() != 0 ) {
            if (recognition.getLabel().equals("Quad")) {
 
@@ -180,15 +172,11 @@ public class AutonomousRed1 extends LinearOpMode {
                encoder(-8000);
                right_turn();
                encoder(-1750);
-
                // This is where the wobble goal will be dropped
-
                encoder(2500);
                left_turn();
                encoder(4000);
-
            } else if (recognition.getLabel().equals("Single")) {
-
                outcome = "B";
                telemetry.update();
                left_turn();
@@ -201,9 +189,7 @@ public class AutonomousRed1 extends LinearOpMode {
                left_turn();
                encoder(2000);
            }
-
        } else if (updatedRecognitions.size() == 0 ) {
-
            outcome = "A";
            telemetry.update();
            right_turn();
@@ -215,24 +201,20 @@ public class AutonomousRed1 extends LinearOpMode {
            encoder(-4000);
            right_turn();
            encoder(-2125);
-
        } else {
-
            outcome = "UNKNOWN; Parking for power shot";
            telemetry.update();
            left_turn();
            encoder(-2500);
            right_turn();
            encoder(-4125);
-
-
        }
        if (tfod != null) {
            tfod.shutdown();
        }
-
-       // Insert power shot here 
       telemetry.addData("outcome: ", outcome);
       telemetry.update();
+      // Insert power shot here 
+      }
    }
 }
